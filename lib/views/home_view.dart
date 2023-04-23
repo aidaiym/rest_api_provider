@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rest_api_provider/views/album_detail_view.dart';
 import '../models/album_model.dart';
 import '../providers/album_provider.dart';
 
@@ -25,6 +26,7 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         title: const Text('Album Provider API'),
       ),
+      // RefreshIndicator - The ability to refresh the list of items by pulling down on the list.
       body: RefreshIndicator(
         onRefresh: () => context.read<AlbumProvider>().refreshList(),
         child: Consumer<AlbumProvider>(
@@ -39,20 +41,31 @@ class _HomeViewState extends State<HomeView> {
               itemCount: albums.length,
               itemBuilder: (context, index) {
                 final album = albums[index];
+                // Dismissible -  The ability to delete an item from the list by swiping left on an item in the list.
                 return Dismissible(
                   key: Key(album.toString()),
                   onDismissed: (direction) {
                     AlbumProvider().removeItem(index);
                   },
                   background: Container(color: Colors.red),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      child: Image.network(album.photo),
-                    ),
-                    title: Text(
-                      album.title,
-                      style: const TextStyle(
-                        color: Colors.black,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AlbumDetailView(album: album),
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        child: Image.network(album.photo),
+                      ),
+                      title: Text(
+                        album.title,
+                        style: const TextStyle(
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
