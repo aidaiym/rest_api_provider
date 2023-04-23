@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rest_api_provider/views/add_album_view.dart';
 import 'package:rest_api_provider/views/album_detail_view.dart';
-import '../models/album_model.dart';
 import '../providers/album_provider.dart';
 
 class HomeView extends StatefulWidget {
@@ -75,29 +75,14 @@ class _HomeViewState extends State<HomeView> {
           },
         ),
       ),
+      // The ability to add a new item to the list by tapping a "+" button in the top right corner of the screen.
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              final Album newItem;
-              return AlertDialog(
-                title: const Text('Add new item'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('Cancel'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      // context.read<AlbumProvider>().addItem(newItem);
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Add'),
-                  ),
-                ],
-              );
-            },
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddAlbumView(),
+            ),
           );
         },
         child: const Icon(Icons.add),

@@ -27,4 +27,23 @@ class AlbumService {
       return [];
     }
   }
+
+  static Future<void> addAlbum(Album newAlbum) async {
+    try {
+      final response = await http.post(
+        Uri.parse(ApiConst.albums),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(newAlbum.toJson()),
+      );
+      if (response.statusCode == 201) {
+        log('Item added successfully');
+      } else {
+        log('Failed to add item: ${response.statusCode}');
+      }
+    } catch (e) {
+      log('Failed to connect to the server: $e');
+    }
+  }
 }

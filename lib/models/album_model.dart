@@ -21,4 +21,8 @@ class Album {
       photo: map['photoUrl'] as String,
     );
   }
+  Map<String, dynamic> toJson() => {
+        'name': title,
+        'photoUrl': photo,
+      };
 }
