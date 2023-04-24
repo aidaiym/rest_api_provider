@@ -48,7 +48,16 @@ class _HomeViewState extends State<HomeView> {
                     AlbumProvider().removeItem(index);
                   },
                   background: Container(color: Colors.red),
-                  child: GestureDetector(
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      child: Image.network(album.photo),
+                    ),
+                    title: Text(
+                      album.title,
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -57,17 +66,6 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       );
                     },
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        child: Image.network(album.photo),
-                      ),
-                      title: Text(
-                        album.title,
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
                   ),
                 );
               },
